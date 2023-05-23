@@ -75,10 +75,23 @@ ann1.fit(x_train2, y_train, epochs=10, validation_data=(x_test2,y_test))
 
 ##################################
 
+prediction=ann1.predict(x_test2)
+predicted_label=np.argmax(prediction, axis=1)
+label=np.unique(predicted_label)
 
+from sklearn import metrics
+
+cm=metrics.confusion_matrix(y_test, predicted_label, labels=label)
+disp=metrics.ConfusionMatrixDisplay(cm)
+disp.plot()
+
+print(metrics.classification_report(y_test, predicted_label))
+
+
+y_train2=np.where(y_train>5,1,0)
 
  
- fc_model=tf.keras.models.Sequential([
+fc_model=tf.keras.models.Sequential([
     tf.keras.layers.Flatten(input_shape=[2,2]),
     tf.keras.layers.Dense(128, activation='relu'),
     tf.keras.layers.Dense(64, activation='relu'),
