@@ -9,17 +9,19 @@ from tensorflow import keras ## módulo tiene la mayoria de funciones para las r
 ##### Cargar y visualizar los datos de mnist
 
 ###cargar datos ###
-(x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
+(x_train2, y_train2), (x_test2, y_test2) = keras.datasets.mnist.load_data()
 
 x_train.shape
 y_train.shape
 x_test.shape
 y_test.shape
 
+
+
 #### visualizar las y ###
 
 np.unique(y_train) ### para ver las categorias que tiene
-plt.imshow(x_train[30000],cmap='gray')
+plt.imshow(x_train[7000],cmap='gray')
 plt.show()
 
 ######### cargar datos profesor ###
@@ -28,7 +30,7 @@ plt.show()
 x_train.shape
 np.unique(y_train,return_counts=True) ###analizar observaciones por categoria
 
-plt.imshow(x_train[6000], cmap='gray')
+plt.imshow(x_train[5000], cmap='gray')
 y_train[6000]
 
 ##############ajustar red neuronal y RF ###################
@@ -65,12 +67,13 @@ ann1=keras.models.Sequential([
     keras.layers.Dense(10, activation='softmax')    
 ])
 
+ann1.count_params()
+28*28
+
 ### optimizador, hiperparámetros de optimización de la red
 
 ann1.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-
-
-
 rf.fit(x_train2r,y_train)
-ann1.fit(x_train2, y_train, epochs=10, validation_data=(x_test2,y_test))
+
+ann1.fit(x_train2, y_train, epochs=5, validation_data=(x_test2,y_test))
