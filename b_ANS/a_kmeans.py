@@ -20,9 +20,7 @@ kmedias.fit(features) ## ajusta modelo a datos
 
 
 cluster_label= kmedias.labels_ ##numeros de los cluster
-
 df_iris['cluster']= cluster_label ## agregar clusters a dataframe
-
 centroides=kmedias.cluster_centers_ ## centroides
 
 
