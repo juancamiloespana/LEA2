@@ -66,6 +66,7 @@ sns.lineplot(x=np.arange(2,25), y=sil, palette='viridis')
 
 
 
+
 ####
 db_final=cluster.DBSCAN(eps=0.3, min_samples=11)
 db_final.fit(feat_sc)
