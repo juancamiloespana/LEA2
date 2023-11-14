@@ -15,9 +15,7 @@ import tensorflow as tf
 from tensorflow import keras
 
 
-
 ### cargamos los datos 
-
 url='https://raw.githubusercontent.com/juancamiloespana/LEA2/master/_data/iris.csv'
 
 iris_df= pd.read_csv(url)
@@ -39,19 +37,27 @@ X_tr, X_te, y_tr, y_te= train_test_split(X_sc, y, test_size=0.2)
 
 ann1= keras.models.Sequential([
     keras.layers.Dense(64, activation='relu'),
-    keras.layers.Dense(32, activation='relu'),
-    keras.layers.Dense(3, activation='softmax')  
+    keras.layers.Dense(32, activation='tanh'),
+    keras.layers.Dense(3, activation='softmax')
 ])
 
 ### definir función de perdida y metrica desempeño
-l=keras.losses.SparseCategoricalCrossentropy()
-m=keras.metrics.SparseCategoricalAccuracy()
+loss=keras.losses.SparseCategoricalCrossentropy()
+opt= keras.optimizers.Adam(learning_rate=0.01)
 
-ann1.compile(loss=l, metrics=m) ### información para la optimización de parámetros
+### y la métrica
+m= keras.metrics.SparseCategoricalAccuracy()
 
-#### ajuste del modelo configurado a los datos
-ann1.fit(X_tr, y_tr,epochs=10, validation_data=(X_te, y_te))
 
+###definir optimizacion y ajuste(entrenamiento)
+
+ann1.compile(optimizer=opt, loss=loss, metrics=m)
+ann1.fit(X_tr, y_tr, epochs=10, validation_data=(X_te, y_te))
+
+X_tr.shape
+ann1.count_params()
 ann1.summary()
+
+
 
 
