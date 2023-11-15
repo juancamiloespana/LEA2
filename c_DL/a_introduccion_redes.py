@@ -87,8 +87,6 @@ ann2= keras.models.Sequential([
 
 ann2.compile(optimizer=opt, loss=loss, metrics=m)
 ann2.fit(X_tr, y_tr, epochs=10, validation_data=(X_te, y_te))
-
-
 ###### afinamiento con grilla
 
 ### vamos a afinar optimizador a modo de ejemplo de una variable tipo choice, pero con nyestro diagnostico no seria necesario
