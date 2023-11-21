@@ -25,7 +25,6 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 
 
-
 ### cargamos los datos 
 url='https://raw.githubusercontent.com/juancamiloespana/LEA2/master/_data/iris.csv'
 
@@ -38,7 +37,14 @@ X= iris_df.iloc[:,0:4]
 y.value_counts() ### tres categorías 
 
 ### escalado de las variables
-X_sc=StandardScaler().fit_transform(X)
+sc=StandardScaler().fit(X) ## calcular la media y desviacion para hacer el escalado
+
+#### exportar el escalador
+import joblib
+joblib.dump(sc, "C:\\cod\\LEA2\\c_DL\\sc.joblib") ### exporta objeto
+
+
+X_sc=sc.transform(X)  ## escalado cob base en variales escladas
 
 ## separar entrenamiento evaluación
 X_tr, X_te, y_tr, y_te= train_test_split(X_sc, y, test_size=0.2) 
@@ -85,6 +91,7 @@ ann2= keras.models.Sequential([
     keras.layers.Dense(3, activation='softmax')
 ])
 
+opt= keras.optimizers.Adam(learning_rate=0.01)
 ann2.compile(optimizer=opt, loss=loss, metrics=m)
 ann2.fit(X_tr, y_tr, epochs=10, validation_data=(X_te, y_te))
 ###### afinamiento con grilla
@@ -136,8 +143,13 @@ win_model=search_model.get_best_models(1)[0] ### me muestra 1 modelo y escoge po
 win_model.build()
 win_model.summary()
 
+#### exportar modelo ganador
 
-######## analizar modelo  ganador 
+joblib.dump(win_model, 'C:\\cod\\LEA2\\c_DL\\win_model.joblib') ### exportar modelo ganador
+
+
+
+####### analizar modelo  ganador 
 
 y_pred= np.argmax(win_model.predict(X_te),axis=1)
 
