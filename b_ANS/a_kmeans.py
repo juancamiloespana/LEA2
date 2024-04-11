@@ -11,13 +11,18 @@ from kneed import KneeLocator ### para detectar analíticamente el cambio en la 
 from clusteval import clusteval ### para detecter numero de cluster automáticamente
 
 
-df_iris = sns.load_dataset('iris')
-df_iris.info()
-
-features=df_iris[['sepal_length','sepal_width']]
-
-
 ### verificar nulos
 ### imputar
 ### escalar 
+
+df_iris = sns.load_dataset('iris')
+df_iris.info() ## verificar nulos
+
+features=df_iris[['sepal_length','sepal_width']]
+
+sc= StandardScaler().fit(features)
+features_sc=sc.transform(features)
+
+
+
 
