@@ -27,12 +27,46 @@ features_sc=sc.transform(features)
 kmeans=cluster.KMeans(n_clusters=3, n_init=10)
 kmeans.fit(features_sc)
 
-cluster_label=kmeans.labels_
-centroides= kmeans.cluster_centers_
+cluster_label=kmeans.labels_ ### ver los cluster de cada fila
+centroides= kmeans.cluster_centers_ ### valores de los centroides
 
 sns.scatterplot(x='sepal_length', y='sepal_width', hue=cluster_label, data=df_iris, palette='viridis')
 
-kmeans.inertia_
+kmeans.inertia_ ###wcss 
+silhouette_score(features_sc,cluster_label) ### silhouette score
+
+
+
+#### este for es para calcular el número de cluster de mejor desempeño, ya sea por regla del codo del wcss
+### o el coeficiente de silhouette que sea el menor
+wcss=[]
+ss=[]
+
+for i in range(1,10):
+    kmeans=cluster.KMeans(n_clusters=i, n_init=10)
+    kmeans.fit(features_sc)
+    wcss.append(kmeans.inertia_)
+    if i>1:
+        ss_i=silhouette_score(features_sc, kmeans.labels_)
+        ss.append(ss_i)
+    
+
+### análisis gráfico
+
+sns.lineplot(x=range(1,10), y=wcss, marker='o')
+plt.title("N_cluster vs WCSS")
+plt.show()
+
+    
+sns.lineplot(x=range(2,10), y=ss, marker='o')
+plt.title("N_cluster vs Silhouette score")
+plt.show()
+
+
+### regla del codo analítica ######
+
+k = KneeLocator(x=range(1,10), y=wcss,curve='convex', direction='decreasing' )
+k.elbow ### este es el número de de cluster, valor de x en que cambia la pendiente
 
 
 
