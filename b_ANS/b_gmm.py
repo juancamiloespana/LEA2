@@ -24,7 +24,7 @@ gmm.fit(x_sc)
 gmm.score(x_sc) ### score por defecto es logaritmo de la función de verosimilitud es adiminesional y no se interpreta por sí solo
 gmm.predict_proba(x_sc) ## probabilidad de pertecencer a cada cluster
 gmm.predict(x_sc) ### para conocer los label del cluster.
-
+gmm.bic(x_sc)
 ##### afinamiento de hiperparámetros ##########
 
 param_grid={
