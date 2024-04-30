@@ -34,13 +34,13 @@ min_sample=kl.elbow ## min sample
 eps=distancia_k_mean[kl.elbow] ### eps
 
 ########
-eps2=eps*0.6
 
-db=cluster.DBSCAN(eps=eps2, min_samples=6)
+db=cluster.DBSCAN(eps=0.3, min_samples=4)
 db.fit(feat_sc)
 
 np.unique(db.labels_, return_counts=True)
 sns.scatterplot(x=feat_sc[:,0],y=feat_sc[:,1], hue=db.labels_, palette='viridis')
+
 
 
 

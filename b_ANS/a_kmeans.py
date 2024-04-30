@@ -70,3 +70,12 @@ k.elbow ### este es el número de de cluster, valor de x en que cambia la pendie
 
 
 
+from clusteval import clusteval
+
+ce=clusteval(evaluate='silhouette')
+ce.fit(features_sc)
+
+# Plot
+ce.plot()
+ce.plot_silhouette(cmap="RdBu")
+
