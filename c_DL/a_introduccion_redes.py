@@ -18,7 +18,7 @@ url='https://raw.githubusercontent.com/juancamiloespana/LEA2/master/_data/iris.c
 iris_df= pd.read_csv(url)
 
 ## verificar nulos
-iris.info()
+iris_df.info()
 
 ### separar respuesta y explicativas
 y = iris_df['type']
