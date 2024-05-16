@@ -46,10 +46,15 @@ X_tr.shape
 
 ann1=keras.models.Sequential([
     keras.layers.InputLayer(input_shape=X_tr.shape[1:]),  ## capa de entrada no es necesaria
-    keras.layers.Dense(units=128, activation='relu'),  ### capa oculta 1, 128 neuronas, función de activación relu
-    keras.layers.Dense(units=64, activation='relu'), ## capa oculta 2, 128 neuronas, función de activación relu
+    keras.layers.Dense(units=512, activation='relu'),
+    keras.layers.Dense(units=256, activation='relu'),  ### capa oculta 1, 128 neuronas, función de activación relu
+    keras.layers.Dense(units=128, activation='relu'), ## capa oculta 2, 128 neuronas, función de activación relu
+    keras.layers.Dense(units=128, activation='relu'),
     keras.layers.Dense(units=3,activation='softmax')  # capa de salida , 128 neuronas, función de activación relu
 ])
+
+ann1.count_params()
+
 
 
 #### hiperparámetros de optimización(entrenamiento)
@@ -58,10 +63,46 @@ l=keras.losses.SparseCategoricalCrossentropy()
 
 m=keras.metrics.SparseCategoricalAccuracy()
 
-ann1.compile(optimizer=keras.optimizers.Adam(learning_rate=0.01), loss=l, metrics=m)
+ann1.compile(optimizer=keras.optimizers.RMSprop(learning_rate=0.01), loss=l, metrics=m)
 
 ##### configurar el fit ###
-ann1.fit(X_tr, y_tr, epochs=10, validation_data=(X_te, y_te))
+ann1.fit(X_tr, y_tr, epochs=20, validation_data=(X_te, y_te))
 
 
 
+
+
+#########a
+
+dor=0.3
+sr=0.01
+
+l2_r=keras.regularizers.l2(sr)
+
+fa_cap_oculatas='relu'
+
+
+ann1=keras.models.Sequential([
+    keras.layers.InputLayer(input_shape=X_tr.shape[1:]),  ## capa de entrada no es necesaria
+    keras.layers.Dense(units=512, activation='relu', kernel_regularizer=l2_r),
+    keras.layers.Dropout(dor),
+    keras.layers.Dense(units=256, activation='relu',  kernel_regularizer=l2_r),
+    keras.layers.Dropout(dor),### capa oculta 1, 128 neuronas, función de activación relu
+    keras.layers.Dense(units=128, activation='relu',  kernel_regularizer=l2_r),
+    keras.layers.Dropout(dor),## capa oculta 2, 128 neuronas, función de activación relu
+    keras.layers.Dense(units=128, activation='relu',  kernel_regularizer=l2_r),
+    keras.layers.Dropout(dor),
+    keras.layers.Dense(units=3,activation='softmax')  # capa de salida , 128 neuronas, función de activación relu
+])
+
+
+
+
+#### hiperparámetros de optimización(entrenamiento)
+#### compilador ####
+l=keras.losses.SparseCategoricalCrossentropy()
+m=keras.metrics.SparseCategoricalAccuracy()
+ann1.compile(optimizer=keras.optimizers.RMSprop(learning_rate=0.01), loss=l, metrics=m)
+
+##### configurar el fit ###
+ann1.fit(X_tr, y_tr, epochs=20, validation_data=(X_te, y_te))
