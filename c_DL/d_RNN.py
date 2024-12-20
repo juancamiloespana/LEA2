@@ -6,6 +6,7 @@ from tensorflow import keras
 
 from datasets import load_dataset ### paquete con conjunto de datos
 import random
+
 # Cargar datos con comentarios de películas
 imdb_data = load_dataset('imdb')
 
@@ -59,7 +60,7 @@ x_test = tokenizer.texts_to_sequences(test_texts)
 # llenar de ceros las primeras posiciones para completar un vector de tamaño 500 y que la longitud de cada input sea estándar
 x_train = pad_sequences(x_train, maxlen=maxlen)
 x_test = pad_sequences(x_test, maxlen=maxlen)
-x_train[0]
+x_train[1]
 len(x_train[0])
 len(x_train[1])
 
